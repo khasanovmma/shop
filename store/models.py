@@ -1,6 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class CategoryImage(models.Model):
+    category = models.ForeignKey("Category", on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="photo/category/%Y/%m/%d/")
+
+    def __str__(self):
+        return self.category.title
+
 class Category(models.Model):
     title = models.CharField(max_length=100)
 
@@ -36,7 +43,7 @@ class ProductTag(models.Model):
 
 class ProductImage(models.Model):
     product = models.ForeignKey("Product", related_name="images", on_delete=models.CASCADE)
-    image = models.ImageField(upload_to="photo/%Y/%m/%d/")
+    image = models.ImageField(upload_to="photo/product/%Y/%m/%d/")
 
     def __str__(self):
         return self.product.title
