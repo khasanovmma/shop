@@ -1,9 +1,35 @@
+
+{% if  pagination.num_pages > 1 %}
 <nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center justify-content-lg-end">
-      <li class="page-item mx-1"><a class="page-link" href="#!" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-      <li class="page-item mx-1 active"><a class="page-link" href="#!">1</a></li>
-      <li class="page-item mx-1"><a class="page-link" href="#!">2</a></li>
-      <li class="page-item mx-1"><a class="page-link" href="#!">3</a></li>
-      <li class="page-item ms-1"><a class="page-link" href="#!" aria-label="Next"><span aria-hidden="true">»</span></a></li>
-    </ul>
-  </nav>
+  <ul class="pagination justify-content-center justify-content-lg-end">
+      {% if current_page.has_previous %}
+          <li class="page-item mx-1">
+              <a class="page-link" href="?page={{ current_page.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true">«</span>
+              </a>
+          </li>
+      {% endif %}
+      {% for page in pagination.page_range %}
+          {% if page == current_page.number %}
+              <li class="page-item mx-1 active">
+                  <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+              </li>
+          {% else %}
+              <li class="page-item mx-1">
+                  <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+              </li>
+          {% endif %}
+      {% endfor %}
+      {% if current_page.has_next %}
+          <li class="page-item ms-1">
+              <a class="page-link" href="?page={{ current_page.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">»</span>
+              </a>
+          </li>
+      {% endif %}
+  </ul>
+</nav>
+
+{% endif %}
+  
+

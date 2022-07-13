@@ -1,11 +1,8 @@
 from django.contrib import admin
 
-from .models import Category, SubCategory, CategoryImage, Product, ProductStatus, ProductImage, ProductTag
+from .models import Category, SubCategory, Product, ProductStatus, ProductImage, ProductTag
 
-@admin.register(CategoryImage)
-class CategoryImageAdmin(admin.ModelAdmin):
-    list_display = ["id", "category", "image"]
-    list_display_links = ["id", "category"]
+
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):

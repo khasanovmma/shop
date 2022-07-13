@@ -1,15 +1,12 @@
 from django.db import models
+from django.shortcuts import reverse
+
 from django.contrib.auth.models import User
-
-class CategoryImage(models.Model):
-    category = models.ForeignKey("Category", on_delete=models.CASCADE)
-    image = models.ImageField(upload_to="photo/category/%Y/%m/%d/")
-
-    def __str__(self):
-        return self.category.title
 
 class Category(models.Model):
     title = models.CharField(max_length=100)
+    image = models.ImageField(upload_to="photo/category/%Y/%m/%d/", null=True)
+
 
     def __str__(self):
         return self.title
@@ -50,6 +47,7 @@ class ProductImage(models.Model):
 
 class Product(models.Model):
     title = models.CharField(max_length=100)
+    image = models.ImageField(upload_to="photo/product/%Y/%m/%d/", null=True)
     description = models.TextField()
     price = models.PositiveIntegerField()
     status = models.ForeignKey("ProductStatus", on_delete=models.SET_NULL, null=True)
@@ -58,6 +56,8 @@ class Product(models.Model):
     like = models.ManyToManyField(User, blank=True)
     subcategory = models.ForeignKey("SubCategory", on_delete=models.SET_NULL, null=True)
 
+    def get_absolute_url(self):
+        return reverse("prodcut_detail", kwargs={"pk": self.pk})
    
 
     def __str__(self):
