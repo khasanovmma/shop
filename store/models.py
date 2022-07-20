@@ -1,9 +1,10 @@
 from django.db import models
 from django.shortcuts import reverse
 
-from django.contrib.auth.models import User
+
 
 class Category(models.Model):
+    email = models.EmailField(blank=True, unique=True)
     title = models.CharField(max_length=100)
     image = models.ImageField(upload_to="photo/category/%Y/%m/%d/", null=True)
 
@@ -53,7 +54,7 @@ class Product(models.Model):
     status = models.ForeignKey("ProductStatus", on_delete=models.SET_NULL, null=True)
     tag = models.ForeignKey("ProductTag", on_delete=models.SET_NULL, null=True)
     quantity = models.PositiveIntegerField()
-    like = models.ManyToManyField(User, blank=True)
+    like = models.ManyToManyField("members.User", blank=True)
     subcategory = models.ForeignKey("SubCategory", on_delete=models.SET_NULL, null=True)
 
     def get_absolute_url(self):
